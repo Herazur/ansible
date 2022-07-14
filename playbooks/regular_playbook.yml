@@ -1,0 +1,18 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+
+  - name: update repository index 
+    apt:
+      update_cache: yes #sunucuları günceller
+    when: ansible_distribution in ["Ubuntu", "Debian"] #iki farklı dağıtıma sahipsek bunları her iki dağıtım içinde çalıştıracaktır.
+
+  - name: install apache2 and php packages #ne yaptığına dair isim
+    apt:
+      name: 
+        - apache2 #apache kurar
+        - libapache2-mod-php #php kurar
+      state: latest #paketlerin en son sürümü olduğuna emin ol
+    when: ansible_distribution == "Ubuntu"

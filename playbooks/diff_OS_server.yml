@@ -1,0 +1,22 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+
+  - name: update repository index 
+    apt:
+      update_cache: yes #sunucuları günceller
+    when: ansible_distribution == "Ubuntu" #eğer farklı bir distribution'a sahip sunucu varsa bu seçenekleri atlar ve sadece belirtilen 'UBUNTU' olan sunucularda çalıştırır.
+
+  - name: install apache2 package #ne yaptığına dair isim
+    apt:
+      name: apache2 #apache kurar
+      state: latest #paketlerin en son sürümü olduğuna emin ol
+    when: ansible_distribution == "Ubuntu"
+
+  - name: add php support for apache
+    apt:
+      name: libapache2-mod-php
+      state: latest
+    when: ansible_distrubition == "Ubuntu"
